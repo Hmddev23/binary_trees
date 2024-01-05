@@ -10,16 +10,16 @@
 
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree)
 {
-	binary_tree_t *pivot_left, *tmp_node;
+	binary_tree_t *new_root, *tmp_node;
 
 	if (tree == NULL || tree->right == NULL)
 	{
 		return (NULL);
 	}
 
-	pivot_left = tree->right;
-	tmp_node = pivot_left->left;
-	pivot_left->left = tree;
+	new_root = tree->right;
+	tmp_node = new_root->left;
+	new_root->left = tree;
 	tree->right = tmp_node;
 
 	if (tmp_node != NULL)
@@ -27,20 +27,20 @@ binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree)
 		tmp_node->parent = tree;
 	}
 	tmp_node = tree->parent;
-	tree->parent = pivot_left;
-	pivot_left->parent = tmp_node;
+	tree->parent = new_root;
+	new_root->parent = tmp_node;
 
 	if (tmp_node != NULL)
 	{
 		if (tmp_node->left == tree)
 		{
-			tmp_node->left = pivot_left;
+			tmp_node->left = new_root;
 		}
 		else
 		{
-			tmp_node->right = pivot_left;
+			tmp_node->right = new_root;
 		}
 	}
 
-	return (pivot_left);
+	return (new_root);
 }
